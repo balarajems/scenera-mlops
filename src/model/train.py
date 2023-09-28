@@ -24,6 +24,12 @@ def main(args):
 
     # train model
     train_model(args.reg_rate, X_train, X_test, y_train, y_test)
+    
+    mlflow.register_model(
+        model_uri=f"runs:/{mlflow.active_run().info.run_id}/sklearn-model",
+        name="scenera-demo-model",
+    )
+
 
 
 def split_data(df):
