@@ -1,0 +1,81 @@
+{
+  "name": "Scenera",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+
+  // Set *default* container specific settings.json values on container create.
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash",
+
+    // python settings
+    "python.autoComplete.addBrackets": true,
+    "python.jediEnabled": false,
+    "python.languageServer" : "Default",
+
+    // python formatting
+    "python.formatting.provider": "autopep8",
+
+    // python linting
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": true,
+    "python.linting.mypyEnabled": true,
+    "python.linting.flake8Enabled": false,
+    "python.linting.pydocstyleEnabled": true,
+
+    //python testing
+    "python.testing.unittestEnabled": false,
+    "python.testing.nosetestsEnabled": false,
+    "python.testing.pytestEnabled": true,
+
+    "files.watcherExclude": {
+      "**/build/**": true,
+      "**/dist/**": true,
+      "**/.ipynb_checkpoints/**": true,
+      "**/*.egg-info/**": true,
+      "**/.pytest_cache/**": true,
+      "**/__pycache__/**": true,
+      "**/.mypy_cache/**": true,
+      "**/.venv/**": true
+    },
+    "files.exclude": {
+      "**/.pytest_cache/**": true,
+      "**/.mypy_cache/**": true,
+      "**/__pycache__/**": true,
+      "**/*.egg-info/**": true
+    }
+  },
+
+  // Add the IDs of extensions you want installed when the container is created.
+  "extensions": [
+    "ms-python.python",
+    "eamodio.gitlens",
+    "DavidAnson.vscode-markdownlint",
+    "yzhang.markdown-all-in-one",
+    "redhat.vscode-yaml",
+    "streetsidesoftware.code-spell-checker",
+    "EditorConfig.EditorConfig",
+    "ms-vscode.azurecli",
+    "ms-vscode.vscode-node-azure-pack"
+  ],
+
+  "runArgs": ["--env-file", ".devcontainer/.env"],
+
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  "forwardPorts": [5003],
+
+  // Use 'postCreateCommand' to run commands after the container is created.
+  // "postCreateCommand": "pip3 install --user -r requirements.txt",
+
+  // "remoteEnv": {
+  //   "SAMPLE_ENV_KEY": "This is a sample to set remote env on the container"
+  // },
+
+  "features": {
+    "azure-cli": "latest"
+  },
+
+  // Connecting as non-root user. See https://aka.ms/vscode-remote/containers/non-root.
+  "remoteUser": "root"
+}
