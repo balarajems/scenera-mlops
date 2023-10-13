@@ -25,4 +25,8 @@ jobs:
           pip install -r requirements.txt
 
       - name: execute py script # run train_model_status.py
-        run: python train_model_status.py
+        run: |
+            import os
+            print(os.environ['PATH'])
+            print %ENV
+            python train_model_status.py
