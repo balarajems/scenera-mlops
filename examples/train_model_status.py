@@ -7,6 +7,7 @@ model_name = "" #TODO: Get from first job - unique id
 resource_name = "" #TODO: put in environment "scenera-computervision-rnd-resource"
 multi_service_endpoint = None
 
+#TODO: Get key from keyvault
 training_client = TrainingClient(ResourceType.SINGLE_SERVICE_RESOURCE, resource_name, multi_service_endpoint, os.getenv('RESOURCE_KEY'))
 model = training_client.wait_for_training_completion(model_name)
 with mlflow.start_run() as run:

@@ -8,6 +8,7 @@ dataset_name = "" #TODO: Get from GHA input 'sceneradatasetv1'
 resource_name = "scenera-computervision-rnd-resource" #TODO" Get from environment
 multi_service_endpoint = None
 
+#TODO: Get key from keyvault
 training_client = TrainingClient(ResourceType.SINGLE_SERVICE_RESOURCE, resource_name, multi_service_endpoint, os.getenv('RESOURCE_KEY'))
 train_params = TrainingParameters(training_dataset_name=dataset_name, time_budget_in_hours=1, model_kind=ModelKind.GENERIC_OD)  # checkout ModelKind for all valid model kinds
 
