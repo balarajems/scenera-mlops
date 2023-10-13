@@ -1,0 +1,9 @@
+{
+  "images": [{"id": 1, "width": 400.0, "height": 400.0, "file_name": "images/cat_400x_400.png", "absolute_url": "https://sceneratestdatalake01.blob.core.windows.net/coco-dataset/test_custom_model/images/cat_400_x_400.png"},
+              {"id": 2, "width": 384.0, "height": 450.0, "file_name": "images/dog_384_x_450.png", "absolute_url": "https://sceneratestdatalake01.blob.core.windows.net/coco-dataset/test_custom_model/images/dog_384_x_450.png"}],
+  "annotations": [
+      {"id": 1, "category_id": 1, "image_id": 1, "bbox": [0.1, 0.1, 0.3, 0.3]},
+      {"id": 2, "category_id": 1, "image_id": 2, "bbox": [0.3, 0.3, 0.6, 0.6]}
+  ],
+  "categories": [{"id": 1, "name": "cat"}, {"id": 2, "name": "dog"}]
+}
