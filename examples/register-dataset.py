@@ -2,7 +2,7 @@ from cognitive_service_vision_model_customization_python_samples import DatasetC
 import os
 
 
-dataset_name = 'sceneradatasetv3'
+dataset_name = 'sceneradatasetv1'
 resource_name = "scenera-computervision-rnd-resource"
 multi_service_endpoint = None
 auth_kind = AuthenticationKind.SAS # or AuthenticationKind.MI

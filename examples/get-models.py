@@ -1,8 +1,8 @@
-import http.client, urllib.request, urllib.parse, urllib.error
+import http.client, urllib.request, urllib.parse, urllib.error, os
 
 headers = {
     # Request headers
-    'Ocp-Apim-Subscription-Key': '2c1491d2155e44d795c502005873182b',
+    'Ocp-Apim-Subscription-Key': os.getenv('RESOURCE_KEY'),
 }
 
 params = urllib.parse.urlencode({

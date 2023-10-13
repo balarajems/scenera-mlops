@@ -1,9 +1,9 @@
-import http.client, urllib.request, urllib.parse, urllib.error, requests
+import http.client, urllib.request, urllib.parse, urllib.error, requests, os
 
 headers = {
     # Request headers
     'Content-Type': 'application/json-patch+json',
-    'Ocp-Apim-Subscription-Key': '2c1491d2155e44d795c502005873182b',
+    'Ocp-Apim-Subscription-Key': os.getenv('RESOURCE_KEY'),
 }
 
 params = urllib.parse.urlencode({})
