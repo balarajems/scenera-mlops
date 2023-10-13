@@ -1,6 +1,4 @@
-from cognitive_service_vision_model_customization_python_samples import TrainingClient
-
-from cognitive_service_vision_model_customization_python_samples import TrainingClient, Model, ModelKind, TrainingParameters, EvaluationParameters, ResourceType
+from cognitive_service_vision_model_customization_python_samples import TrainingClient, ResourceType
 import os
 
 
@@ -14,5 +12,6 @@ model = training_client.wait_for_training_completion(model_name)
 print(model.model_performance)
 print(model.evaluation_params)
 print(model.training_cost_in_minutes)
+print(model.training_params)
 
 print(f'Training Metrics: {model.__dict__}')
