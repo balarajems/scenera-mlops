@@ -25,5 +25,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: execute py script # run train_model_status.py
+        env:
+          RESOURCE_KEY: ${{secrets.RESOURCE_KEY}}  
         run: python train_model_status.py
         working-directory: ./examples
