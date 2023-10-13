@@ -2,10 +2,10 @@ name: get model training status
 
 on:
   workflow_dispatch:
-  push:
-    branches: [ scenera-devcontainer ]
-  # schedule:
-  #   - cron: '*/5 * * * *' # every 5 minutes
+  # push:
+  #   branches: [ scenera-devcontainer ]
+  schedule:
+    - cron: '*/5 * * * *' # every 5 minutes
 
 jobs:
   build:
