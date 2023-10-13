@@ -1,10 +1,11 @@
 from cognitive_service_vision_model_customization_python_samples import TrainingClient, Model, ModelKind, TrainingParameters, EvaluationParameters, ResourceType
 import os
+import uuid
 
 
-model_name = 'scenera_custom_model_v1'
-dataset_name = 'sceneradatasetv1'
-resource_name = "scenera-computervision-rnd-resource"
+model_name = str(uuid.uuid4())
+dataset_name = "" #TODO: Get from GHA input 'sceneradatasetv1'
+resource_name = "scenera-computervision-rnd-resource" #TODO" Get from environment
 multi_service_endpoint = None
 
 training_client = TrainingClient(ResourceType.SINGLE_SERVICE_RESOURCE, resource_name, multi_service_endpoint, os.getenv('RESOURCE_KEY'))

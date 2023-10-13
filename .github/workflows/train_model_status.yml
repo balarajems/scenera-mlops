@@ -2,6 +2,11 @@ name: get model training status
 
 on:
   workflow_dispatch:
+    inputs:
+      datasetName: 
+        description: 'Name of dataset in Azure Custom Vision'     
+        required: true
+        default: 'sample-dataset'
   push:
     branches: [ scenera-devcontainer ]
 
