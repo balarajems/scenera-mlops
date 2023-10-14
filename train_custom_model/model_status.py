@@ -2,7 +2,7 @@ from cognitive_service_vision_model_customization_python_samples import Training
 import os
 
 
-model_name = 'scenera_custom_model_v1'
+model_name = 'scenera_custom_model_v2'
 dataset_name = 'sceneradatasetv1'
 resource_name = "scenera-computervision-rnd-resource"
 multi_service_endpoint = None
