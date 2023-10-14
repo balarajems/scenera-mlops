@@ -2,9 +2,9 @@ from cognitive_service_vision_model_customization_python_samples import Training
 import os
 
 
-model_name = 'scenera_custom_model_v2'
-dataset_name = 'sceneradatasetv1'
-resource_name = "scenera-computervision-rnd-resource"
+model_name = os.environ['INPUT_MODEL_NAME']
+dataset_name = os.environ['INPUT_DATASET_NAME']
+resource_name = os.environ['INPUT_RESOURCE_NAME']
 multi_service_endpoint = None
 
 training_client = TrainingClient(ResourceType.SINGLE_SERVICE_RESOURCE, resource_name, multi_service_endpoint, os.getenv('RESOURCE_KEY'))

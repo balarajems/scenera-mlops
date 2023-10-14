@@ -3,11 +3,8 @@ import os
 
 
 model_name = os.environ['INPUT_MODEL_NAME']
-print(f'model_name *********>: {model_name}')
-
-
-dataset_name = 'sceneradatasetv1'
-resource_name = "scenera-computervision-rnd-resource"
+dataset_name = os.environ['INPUT_DATASET_NAME']
+resource_name = os.environ['INPUT_RESOURCE_NAME']
 multi_service_endpoint = None
 
 training_client = TrainingClient(ResourceType.SINGLE_SERVICE_RESOURCE, resource_name, multi_service_endpoint, os.getenv('RESOURCE_KEY'))
