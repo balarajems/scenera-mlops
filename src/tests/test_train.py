@@ -1,6 +1,11 @@
-from model.train import get_csvs_df
+import sys
 import os
 import pytest
+
+DIR = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(os.path.dirname(DIR))
+
+from model.train import get_csvs_df
 
 
 def test_csvs_no_files():

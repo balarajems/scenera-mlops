@@ -25,8 +25,6 @@ def main(args):
 
         # train model
         train_model(args.reg_rate, X_train, X_test, y_train, y_test)
-
-        print(f"RunID ********************>{run.info.run_id}")
         
         mlflow.register_model(
             model_uri=f"runs:/{run.info.run_id}/model",
