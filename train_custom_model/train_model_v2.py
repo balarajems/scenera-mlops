@@ -2,7 +2,10 @@ from cognitive_service_vision_model_customization_python_samples import Training
 import os
 
 
-model_name = 'scenera_custom_model_v2'
+model_name = os.environ['INPUT_MODEL_NAME']
+print(f'model_name *********>: {model_name}')
+
+
 dataset_name = 'sceneradatasetv1'
 resource_name = "scenera-computervision-rnd-resource"
 multi_service_endpoint = None
@@ -15,5 +18,5 @@ eval_params = EvaluationParameters(test_dataset_name=eval_dataset.name) if eval_
 
 
 model = Model(model_name, train_params, eval_params)
-model = training_client.train_model(model)
+# model = training_client.train_model(model)
 print(f'Start training: {model.__dict__}')
