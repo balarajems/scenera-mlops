@@ -3,10 +3,11 @@ name: train custom model
 on:
   workflow_dispatch:
     inputs:
-      datasetName: 
-        description: 'Name of dataset in Azure Custom Vision'     
+      site_name:
+        description: 'Name of dataset in Azure Custom Vision'  
         required: true
         default: 'sample-dataset'
+        type: string
 
 jobs:
   train-custom-model:
