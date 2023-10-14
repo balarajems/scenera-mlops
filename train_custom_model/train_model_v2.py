@@ -15,5 +15,5 @@ eval_params = EvaluationParameters(test_dataset_name=eval_dataset.name) if eval_
 
 
 model = Model(model_name, train_params, eval_params)
-# model = training_client.train_model(model)
+model = training_client.train_model(model)
 print(f'Start training: {model.__dict__}')
