@@ -37,11 +37,11 @@ jobs:
 
       - name: train custom model
         env:
-          RESOURCE_KEY: ${{secrets.RESOURCE_KEY}}  
+          RESOURCE_KEY: ${{secrets.RESOURCE_KEY}} 
+          INPUT_MODEL_NAME: ${{ github.event.inputs.modelName }}
+          INPUT_DATASET_NAME: ${{ github.event.inputs.datasetName }} 
+          INPUT_RESOURCE_NAME: ${{ github.event.inputs.resourceName }}
         run: |
-          INPUT_MODEL_NAME=${{ github.event.inputs.modelName }}
-          INPUT_DATASET_NAME=${{ github.event.inputs.datasetName }}
-          INPUT_RESOURCE_NAME=${{ github.event.inputs.resourceName }}
           python train_model_v2.py
         working-directory: ./train_custom_model
   get_model_training_status:
@@ -62,12 +62,11 @@ jobs:
 
       - name: get training model status
         env:
-          MODEL_NAME: ${{needs.job1.outputs.output1}}
-          RESOURCE_KEY: ${{secrets.RESOURCE_KEY}}  
+          RESOURCE_KEY: ${{secrets.RESOURCE_KEY}}
+          INPUT_MODEL_NAME: ${{ github.event.inputs.modelName }}
+          INPUT_DATASET_NAME: ${{ github.event.inputs.datasetName }} 
+          INPUT_RESOURCE_NAME: ${{ github.event.inputs.resourceName }}  
         run: |
-          INPUT_MODEL_NAME=${{ github.event.inputs.modelName }}
-          INPUT_DATASET_NAME=${{ github.event.inputs.datasetName }}
-          INPUT_RESOURCE_NAME=${{ github.event.inputs.resourceName }}
           python model_status.py
         working-directory: ./train_custom_model
 
@@ -89,10 +88,10 @@ jobs:
 
       - name: log training metrics
         env:
-          RESOURCE_KEY: ${{secrets.RESOURCE_KEY}}  
+          RESOURCE_KEY: ${{secrets.RESOURCE_KEY}}
+          INPUT_MODEL_NAME: ${{ github.event.inputs.modelName }}
+          INPUT_DATASET_NAME: ${{ github.event.inputs.datasetName }} 
+          INPUT_RESOURCE_NAME: ${{ github.event.inputs.resourceName }}  
         run: |
-          INPUT_MODEL_NAME=${{ github.event.inputs.modelName }}
-          INPUT_DATASET_NAME=${{ github.event.inputs.datasetName }}
-          INPUT_RESOURCE_NAME=${{ github.event.inputs.resourceName }}
           python log_model_metrics.py
         working-directory: ./train_custom_model
