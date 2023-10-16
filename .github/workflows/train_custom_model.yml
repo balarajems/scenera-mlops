@@ -1,5 +1,8 @@
 name: train custom model
 
+env:
+  MODEL_NAME: model
+
 on:
   workflow_dispatch:
     inputs:
@@ -8,12 +11,7 @@ on:
         required: true
         default: 'sceneradatasetv1'
         type: string
-      modelName: 
-        description: 'Name of the custom model to train in Azure Custom Vision'     
-        required: true
-        default: 'scenera-model-v1'
-        type: string
-      resourceName: 
+      computerVisionResourceName: 
         description: 'Name of the computer vision resource in Azure'     
         required: true
         default: 'scenera-computervision-rnd-resource'
@@ -22,76 +20,87 @@ jobs:
   train-custom-model:
     runs-on: ubuntu-latest
     steps:
-      - name: checkout repo content
-        uses: actions/checkout@v2 # checkout the repository content
-
-      - name: setup python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10' # install the python version needed
-
-      - name: install python packages
+      - name: generate unique model name
+        id: generate_model_name
         run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          uuidgen > model_name
+          echo "MODEL_NAME=${uuidgen}" >> "$GITHUB_ENV"
 
-      - name: train custom model
-        env:
-          RESOURCE_KEY: ${{secrets.RESOURCE_KEY}} 
-          INPUT_MODEL_NAME: ${{ github.event.inputs.modelName }}
-          INPUT_DATASET_NAME: ${{ github.event.inputs.datasetName }} 
-          INPUT_RESOURCE_NAME: ${{ github.event.inputs.resourceName }}
+      - name: retrieve model name
+        id: retrieve_model_name
         run: |
-          python train_model_v2.py
-        working-directory: ./train_custom_model
-  get_model_training_status:
-    needs: train-custom-model
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout repo content
-        uses: actions/checkout@v2
+          echo $MODEL_NAME
 
-      - name: setup python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10' 
-      - name: install python packages
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: get training model status
-        env:
-          RESOURCE_KEY: ${{secrets.RESOURCE_KEY}}
-          INPUT_MODEL_NAME: ${{ github.event.inputs.modelName }}
-          INPUT_DATASET_NAME: ${{ github.event.inputs.datasetName }} 
-          INPUT_RESOURCE_NAME: ${{ github.event.inputs.resourceName }}  
-        run: |
-          python model_status.py
-        working-directory: ./train_custom_model
-
-  log_training_metrics:
-    needs: get_model_training_status
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout repo content
-        uses: actions/checkout@v2
-
-      - name: setup python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10' 
-      - name: install python packages
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: log training metrics
-        env:
-          RESOURCE_KEY: ${{secrets.RESOURCE_KEY}}
-          INPUT_MODEL_NAME: ${{ github.event.inputs.modelName }}
-          INPUT_DATASET_NAME: ${{ github.event.inputs.datasetName }} 
-          INPUT_RESOURCE_NAME: ${{ github.event.inputs.resourceName }}  
-        run: |
-          python log_model_metrics.py
-        working-directory: ./train_custom_model
+#      - name: checkout repo content
+#        uses: actions/checkout@v2 # checkout the repository content
+#
+#      - name: setup python
+#        uses: actions/setup-python@v4
+#        with:
+#          python-version: '3.10' # install the python version needed
+#
+#      - name: install python packages
+#        run: |
+#          python -m pip install --upgrade pip
+#          pip install -r requirements.txt
+#
+#      - name: train custom model
+#        env:
+#          RESOURCE_KEY: ${{secrets.RESOURCE_KEY}} 
+##          INPUT_DATASET_NAME: ${{ github.event.inputs.datasetName }} 
+#          INPUT_RESOURCE_NAME: ${{ github.event.inputs.resourceName }}
+#        run: |
+#          python train_model_v2.py
+#          working-directory: ./train_custom_model
+#  get_model_training_status:
+#    needs: train-custom-model
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: checkout repo content
+#        uses: actions/checkout@v2
+#
+#      - name: setup python
+#        uses: actions/setup-python@v4
+#        with:
+#          python-version: '3.10' 
+#      - name: install python packages
+#        run: |
+#          python -m pip install --upgrade pip
+#          pip install -r requirements.txt
+#
+#      - name: get training model status
+#        env:
+#          RESOURCE_KEY: ${{secrets.RESOURCE_KEY}}
+#          INPUT_MODEL_NAME: ${{ github.event.inputs.modelName }}
+#          INPUT_DATASET_NAME: ${{ github.event.inputs.datasetName }} 
+#          INPUT_RESOURCE_NAME: ${{ github.event.inputs.resourceName }}  
+#        run: |
+#          python model_status.py
+#        working-directory: ./train_custom_model
+#
+#  log_training_metrics:
+#    needs: get_model_training_status
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: checkout repo content
+#        uses: actions/checkout@v2
+#
+#      - name: setup python
+#        uses: actions/setup-python@v4
+#        with:
+#          python-version: '3.10' 
+#      - name: install python packages
+#        run: |
+#          python -m pip install --upgrade pip
+#          pip install -r requirements.txt
+#
+#      - name: log training metrics
+#        env:
+#          RESOURCE_KEY: ${{secrets.RESOURCE_KEY}}
+#          INPUT_MODEL_NAME: ${{ github.event.inputs.modelName }}
+#          INPUT_DATASET_NAME: ${{ github.event.inputs.datasetName }} 
+#          INPUT_RESOURCE_NAME: ${{ github.event.inputs.resourceName }}  
+#        run: |
+#          python log_model_metrics.py
+#        working-directory: ./train_custom_model
+#
