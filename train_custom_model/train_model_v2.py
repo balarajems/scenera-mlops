@@ -1,16 +1,18 @@
 from cognitive_service_vision_model_customization_python_samples import TrainingClient, Model, ModelKind, TrainingParameters, EvaluationParameters, ResourceType
-import os
-from azure.keyvault.secrets import SecretClient
-from azure.identity import DefaultAzureCredential
+import os, sys
+DIR = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(os.path.dirname(DIR))
+
+from train_custom_model.util import get_resource_key
 
 
-key_vault_name = os.getenv("KEY_VAULT_NAME")
-KVUri = f"https://{key_vault_name}.vault.azure.net"
+# key_vault_name = os.getenv("KEY_VAULT_NAME")
+# KVUri = f"https://{key_vault_name}.vault.azure.net"
 
-credential = DefaultAzureCredential()
-client = SecretClient(vault_url=KVUri, credential=credential)
+# credential = DefaultAzureCredential()
+# client = SecretClient(vault_url=KVUri, credential=credential)
 
-resource_key = client.get_secret("resource-key")
+resource_key = get_resource_key()
 
 print(f"Your secret is '{resource_key.value}'.")
 
@@ -28,6 +30,6 @@ eval_params = EvaluationParameters(test_dataset_name=eval_dataset.name) if eval_
 
 
 # model = Model(model_name, train_params, eval_params)
-model = training_client.train_model(model)
+# model = training_client.train_model(model)
 print(f'Start training: {model.__dict__}')
 
