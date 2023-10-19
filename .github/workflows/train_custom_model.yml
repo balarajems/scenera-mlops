@@ -42,8 +42,8 @@ jobs:
           INPUT_DATASET_NAME: ${{ github.event.inputs.datasetName }} 
           INPUT_RESOURCE_NAME: ${{ github.event.inputs.resourceName }}
         run: |
-          python train_model_v2.py
-        working-directory: ./train_custom_model
+          python train.py
+        working-directory: ./src/model
   get_model_training_status:
     needs: train-custom-model
     runs-on: ubuntu-latest
@@ -68,7 +68,7 @@ jobs:
           INPUT_RESOURCE_NAME: ${{ github.event.inputs.resourceName }}  
         run: |
           python model_status.py
-        working-directory: ./src/model
+        working-directory: ./train_custom_model
 
   # log_training_metrics:
   #   needs: get_model_training_status
