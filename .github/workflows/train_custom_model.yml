@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       output1: ${{ steps.training.outputs.test }}
-      output2: ${{ steps.step2.outputs.test }}
+      output2: ${{ steps.step2.outputs.test2 }}
     steps:
       - name: checkout repo content
         uses: actions/checkout@v2 # checkout the repository content
@@ -48,7 +48,7 @@ jobs:
           python train.py
           runId=${{ steps.training.outputs.myoutput }} 
           echo "::set-output name=test::$runId"
-          echo "::set-output name=test::world"
+          echo "::set-output name=test2::world"
         id: training
         working-directory: ./src/model
       - run: |
