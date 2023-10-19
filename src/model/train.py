@@ -27,8 +27,9 @@ def main(args):
         # train_model(args.reg_rate, X_train, X_test, y_train, y_test)
         # set_output("run_id", "run123456")
             # set name of the variable
-        print('-> Python script ran')                           
-        os.system('echo "myoutput=run123456" >> $GITHUB_OUTPUT')
+        print('-> Python script ran')
+        run_id = "run123456"                          
+        os.system('echo "myoutput=$run_id" >> $GITHUB_OUTPUT')
         
         # mlflow.register_model(
         #     model_uri=f"runs:/{run.info.run_id}/model",

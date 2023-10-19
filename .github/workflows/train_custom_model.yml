@@ -48,7 +48,7 @@ jobs:
           INPUT_RESOURCE_NAME: ${{ github.event.inputs.resourceName }}
         run: |
           python train.py
-          runId=${{ steps.training.outputs.myoutput }} 
+          runId='echo ${{ steps.training.outputs.myoutput }}'
           echo "::set-output name=test::$runId"
           echo "::set-output name=test2::world"
           my_var="Hello World"
