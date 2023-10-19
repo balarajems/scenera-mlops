@@ -21,6 +21,8 @@ on:
 jobs:
   train-custom-model:
     runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.training.outputs.test }}
     steps:
       - name: checkout repo content
         uses: actions/checkout@v2 # checkout the repository content
@@ -41,8 +43,9 @@ jobs:
           INPUT_MODEL_NAME: ${{ github.event.inputs.modelName }}
           INPUT_DATASET_NAME: ${{ github.event.inputs.datasetName }} 
           INPUT_RESOURCE_NAME: ${{ github.event.inputs.resourceName }}
-        run: python train.py
-        shell: bash
+        run: |
+          python train.py
+          echo "::set-output name=test::hello"
         id: training
         working-directory: ./src/model
       - run: |
@@ -60,16 +63,18 @@ jobs:
         with:
           python-version: '3.10' 
       - name: install python packages
+        env:
+          OUTPUT1: ${{needs.training.outputs.output1}}
         run: |
           echo "****************************"
-          echo "-----------> $mynew_output"  
-          printf '%s\n' "$mynew_output" 
+          echo "-------****>$OUTPUT1"
           echo "****************************"
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
       - name: get training model status
         env:
+          OUTPUT1: ${{needs.training.outputs.output1}}
           RESOURCE_KEY: ${{secrets.RESOURCE_KEY}}
           INPUT_MODEL_NAME: ${{ github.event.inputs.modelName }}
           INPUT_DATASET_NAME: ${{ github.event.inputs.datasetName }} 
