@@ -45,7 +45,9 @@ jobs:
         shell: bash
         id: training
         working-directory: ./src/model
-      - run: echo "-> ${{ steps.training.outputs.myoutput }}"  
+      - run: |
+          echo "-> ${{ steps.training.outputs.myoutput }}" 
+          echo "mynew_output=${{ steps.training.outputs.myoutput }}" >> "$GITHUB_ENV" 
   get_model_training_status:
     needs: train-custom-model
     runs-on: ubuntu-latest
@@ -60,7 +62,8 @@ jobs:
       - name: install python packages
         run: |
           echo "****************************"
-          echo "-----------> ${{ steps.training.outputs.myoutput }}"   
+          echo "-----------> $mynew_output"  
+          printf '%s\n' "$mynew_output" 
           echo "****************************"
           python -m pip install --upgrade pip
           pip install -r requirements.txt
