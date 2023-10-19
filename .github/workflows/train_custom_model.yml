@@ -36,15 +36,16 @@ jobs:
           pip install -r requirements.txt
 
       - name: train custom model
-        id: training
         env:
           RESOURCE_KEY: ${{secrets.RESOURCE_KEY}} 
           INPUT_MODEL_NAME: ${{ github.event.inputs.modelName }}
           INPUT_DATASET_NAME: ${{ github.event.inputs.datasetName }} 
           INPUT_RESOURCE_NAME: ${{ github.event.inputs.resourceName }}
-        run: |
-          python train.py
+        run: python train.py
+        shell: bash
+        id: training
         working-directory: ./src/model
+      - run: echo "-> ${{ steps.training.outputs.myoutput }}"  
   get_model_training_status:
     needs: train-custom-model
     runs-on: ubuntu-latest

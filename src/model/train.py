@@ -28,17 +28,13 @@ def main(args):
         # set_output("run_id", "run123456")
             # set name of the variable
         print('-> Python script ran')                           
-        os.system('echo "run_id=run123456" >> $GITHUB_OUTPUT')
+        os.system('echo "myoutput=run123456" >> $GITHUB_OUTPUT')
         
         # mlflow.register_model(
         #     model_uri=f"runs:/{run.info.run_id}/model",
         #     name="scenera-demo-model",
         # )
 
-
-def set_output(name, value):
-    with open(os.environ['GITHUB_OUTPUT'], 'a') as fh:
-        print(f'{name}={value}', file=fh)
 
 def split_data(df):
     X, y = df[['Pregnancies',
