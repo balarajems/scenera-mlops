@@ -24,13 +24,13 @@ def main(args):
         X_train, X_test, y_train, y_test = split_data(df)
 
         # train model
-        train_model(args.reg_rate, X_train, X_test, y_train, y_test)
-        set_output("run_id", run.info.run_id)
+        # train_model(args.reg_rate, X_train, X_test, y_train, y_test)
+        set_output("run_id", "run123456")
         
-        mlflow.register_model(
-            model_uri=f"runs:/{run.info.run_id}/model",
-            name="scenera-demo-model",
-        )
+        # mlflow.register_model(
+        #     model_uri=f"runs:/{run.info.run_id}/model",
+        #     name="scenera-demo-model",
+        # )
 
 
 def set_output(name, value):
