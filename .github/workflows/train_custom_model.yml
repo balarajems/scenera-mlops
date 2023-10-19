@@ -48,7 +48,7 @@ jobs:
           INPUT_RESOURCE_NAME: ${{ github.event.inputs.resourceName }}
         run: |
           python train.py
-          runId='echo ${{ steps.training.outputs.myoutput }}'
+          echo "runingid=${{ steps.training.outputs.myoutput }}" >> $GITHUB_OUTPUT 
           echo "::set-output name=test::$runId"
           echo "::set-output name=test2::world"
           my_var="Hello World"
@@ -79,7 +79,7 @@ jobs:
           OUTPUT1: ${{needs.train-custom-model.outputs.output1}}
           OUTPUT2: ${{needs.train-custom-model.outputs.output2}}
           OUTPUT3: ${{needs.train-custom-model.outputs.my_vars}}
-          OUTPUT4: ${{needs.train-custom-model.outputs.myoutput2}}
+          OUTPUT4: ${{needs.train-custom-model.outputs.runingid}}
         run: |
           echo "****************************"
           echo "1-------****>$OUTPUT1"

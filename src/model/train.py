@@ -30,7 +30,6 @@ def main(args):
         print('-> Python script ran')
         run_id = "run123456"                          
         os.system(f'echo "myoutput={run_id}" >> $GITHUB_OUTPUT')
-        os.system(f'echo "myoutput2=run123456789" >> $GITHUB_OUTPUT')
         
         # mlflow.register_model(
         #     model_uri=f"runs:/{run.info.run_id}/model",
