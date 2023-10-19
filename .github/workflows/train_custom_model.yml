@@ -23,6 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       output1: ${{ steps.training.outputs.test }}
+      output2: ${{ steps.step2.outputs.test }}
     steps:
       - name: checkout repo content
         uses: actions/checkout@v2 # checkout the repository content
@@ -45,12 +46,12 @@ jobs:
           INPUT_RESOURCE_NAME: ${{ github.event.inputs.resourceName }}
         run: |
           python train.py
-          echo "::set-output name=test::hello"
+          echo "::set-output name=test::${{ steps.training.outputs.myoutput }}"
+          echo "::set-output name=test::world"
         id: training
         working-directory: ./src/model
       - run: |
           echo "-> ${{ steps.training.outputs.myoutput }}" 
-          echo "mynew_output=${{ steps.training.outputs.myoutput }}" >> "$GITHUB_ENV" 
   get_model_training_status:
     needs: train-custom-model
     runs-on: ubuntu-latest
@@ -64,10 +65,12 @@ jobs:
           python-version: '3.10' 
       - name: install python packages
         env:
-          OUTPUT1: ${{needs.training.outputs.output1}}
+          OUTPUT1: ${{needs.train-custom-model.outputs.output1}}
+          OUTPUT2: ${{needs.train-custom-model.outputs.output2}}
         run: |
           echo "****************************"
-          echo "-------****>$OUTPUT1"
+          echo "1-------****>$OUTPUT1"
+          echo "2-------****>$OUTPUT2"
           echo "****************************"
           python -m pip install --upgrade pip
           pip install -r requirements.txt
