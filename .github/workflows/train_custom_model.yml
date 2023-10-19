@@ -24,7 +24,7 @@ jobs:
     outputs:
       output1: ${{ steps.training.outputs.test }}
       output2: ${{ steps.training.outputs.test2 }}
-      my_var: ${{steps.training.outputs.my_var}}
+      output3: ${{steps.set_output_step.outputs.runsid}}
       my_vars: ${{steps.training.outputs.my_vars}}
     steps:
       - name: checkout repo content
@@ -46,19 +46,21 @@ jobs:
           INPUT_MODEL_NAME: ${{ github.event.inputs.modelName }}
           INPUT_DATASET_NAME: ${{ github.event.inputs.datasetName }} 
           INPUT_RESOURCE_NAME: ${{ github.event.inputs.resourceName }}
-          MY_OUTPUT2: ${{steps.training.outputs.myoutput}}
         run: |
           python train.py
-          echo "test env MY_OUTPUT2-------****>$MY_OUTPUT2" 
-          echo "myoutput2='$MY_OUTPUT2'" >> $GITHUB_OUTPUT
           echo "::set-output name=test::$runId"
           echo "::set-output name=test2::world"
         id: training
         shell: bash
         working-directory: ./src/model
-      - run: |
+      - name: set runs id
+        env:
+          MY_OUTPUT2: ${{steps.training.outputs.myoutput}} 
+        run: |
           echo "-> ${{ steps.training.outputs.myoutput }}" 
-          echo "-> ${{ steps.training.outputs.myoutput2 }}" 
+          echo "MY_OUTPUT2*****-> $MY_OUTPUT2"
+          echo "runsid=$MY_OUTPUT2" >> $GITHUB_OUTPUT
+        id: set_output_step 
   get_model_training_status:
     needs: train-custom-model
     runs-on: ubuntu-latest
@@ -73,11 +75,11 @@ jobs:
       - name: install python packages
         env:
           OUTPUT1: ${{needs.train-custom-model.outputs.output1}}
-          OUTPUT2: ${{needs.train-custom-model.outputs.myoutput2}}
+          OUTPUT3: ${{needs.train-custom-model.outputs.output3}}
         run: |
           echo "****************************"
           echo "1-------****>$OUTPUT1"
-          echo "2-------****>$OUTPUT2"
+          echo "2-------****>$OUTPUT3"
           echo "****************************"
           python -m pip install --upgrade pip
           pip install -r requirements.txt
