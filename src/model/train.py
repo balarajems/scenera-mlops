@@ -25,6 +25,7 @@ def main(args):
 
         # train model
         train_model(args.reg_rate, X_train, X_test, y_train, y_test)
+        set_output("run_id", run.info.run_id)
         
         mlflow.register_model(
             model_uri=f"runs:/{run.info.run_id}/model",
@@ -32,6 +33,9 @@ def main(args):
         )
 
 
+def set_output(name, value):
+    with open(os.environ['GITHUB_OUTPUT'], 'a') as fh:
+        print(f'{name}={value}', file=fh)
 
 def split_data(df):
     X, y = df[['Pregnancies',
