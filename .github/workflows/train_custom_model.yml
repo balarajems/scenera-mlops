@@ -46,17 +46,13 @@ jobs:
           INPUT_MODEL_NAME: ${{ github.event.inputs.modelName }}
           INPUT_DATASET_NAME: ${{ github.event.inputs.datasetName }} 
           INPUT_RESOURCE_NAME: ${{ github.event.inputs.resourceName }}
+          MY_OUTPUT2: ${{steps.training.outputs.myoutput}}
         run: |
           python train.py
-          echo "runingid=${{ steps.training.outputs.myoutput }}" >> $GITHUB_OUTPUT 
+          echo "test env MY_OUTPUT2-------****>$MY_OUTPUT2" 
+          echo "myoutput2='$MY_OUTPUT2'" >> $GITHUB_OUTPUT
           echo "::set-output name=test::$runId"
           echo "::set-output name=test2::world"
-          my_var="Hello World"
-          echo "Output [$my_var]"
-          echo "my_var=$my_var" >> $GITHUB_OUTPUT
-          my_vars=${{ steps.training.outputs.myoutput }}
-          echo "Output [$my_vars]"
-          echo "my_vars=$my_vasr" >> $GITHUB_OUTPUT 
         id: training
         shell: bash
         working-directory: ./src/model
@@ -77,15 +73,11 @@ jobs:
       - name: install python packages
         env:
           OUTPUT1: ${{needs.train-custom-model.outputs.output1}}
-          OUTPUT2: ${{needs.train-custom-model.outputs.output2}}
-          OUTPUT3: ${{needs.train-custom-model.outputs.my_vars}}
-          OUTPUT4: ${{needs.train-custom-model.outputs.runingid}}
+          OUTPUT2: ${{needs.train-custom-model.outputs.myoutput2}}
         run: |
           echo "****************************"
           echo "1-------****>$OUTPUT1"
           echo "2-------****>$OUTPUT2"
-          echo "3-------****>$OUTPUT3"
-          echo "4-------****>$OUTPUT4"
           echo "****************************"
           python -m pip install --upgrade pip
           pip install -r requirements.txt
