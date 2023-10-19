@@ -36,6 +36,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: train custom model
+        id: training
         env:
           RESOURCE_KEY: ${{secrets.RESOURCE_KEY}} 
           INPUT_MODEL_NAME: ${{ github.event.inputs.modelName }}
@@ -58,7 +59,7 @@ jobs:
       - name: install python packages
         run: |
           echo "****************************"
-          echo ${{ steps.train-custom-model.outputs.run_id }}
+          echo "-----------> ${{ steps.training.outputs.run_id }}"  
           echo "****************************"
           python -m pip install --upgrade pip
           pip install -r requirements.txt
