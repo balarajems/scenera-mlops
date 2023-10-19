@@ -57,9 +57,7 @@ jobs:
         env:
           MY_OUTPUT2: ${{steps.training.outputs.myoutput}} 
         run: |
-          echo "-> ${{ steps.training.outputs.myoutput }}" 
-          echo "MY_OUTPUT2*****-> $MY_OUTPUT2"
-          echo "runsid=$MY_OUTPUT2" >> $GITHUB_OUTPUT
+          echo "runsid=${{steps.training.outputs.myoutput}} " >> $GITHUB_OUTPUT
         id: set_output_step 
   get_model_training_status:
     needs: train-custom-model
