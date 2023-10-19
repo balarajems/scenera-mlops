@@ -23,7 +23,9 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       output1: ${{ steps.training.outputs.test }}
-      output2: ${{ steps.step2.outputs.test2 }}
+      output2: ${{ steps.training.outputs.test2 }}
+      my_var: ${{steps.training.outputs.my_var}}
+      my_vars: ${{steps.training.outputs.my_vars}}
     steps:
       - name: checkout repo content
         uses: actions/checkout@v2 # checkout the repository content
@@ -49,6 +51,12 @@ jobs:
           runId=${{ steps.training.outputs.myoutput }} 
           echo "::set-output name=test::$runId"
           echo "::set-output name=test2::world"
+          my_var="Hello World"
+          echo "Output [$my_var]"
+          echo "my_var=$my_var" >> $GITHUB_OUTPUT
+          my_vars=${{ steps.training.outputs.myoutput }}
+          echo "Output [$my_vars]"
+          echo "my_vars=$my_vasr" >> $GITHUB_OUTPUT 
         id: training
         working-directory: ./src/model
       - run: |
@@ -68,10 +76,14 @@ jobs:
         env:
           OUTPUT1: ${{needs.train-custom-model.outputs.output1}}
           OUTPUT2: ${{needs.train-custom-model.outputs.output2}}
+          OUTPUT3: ${{needs.train-custom-model.outputs.my_var}}
+          OUTPUT4: ${{needs.train-custom-model.outputs.my_vars}}
         run: |
           echo "****************************"
           echo "1-------****>$OUTPUT1"
           echo "2-------****>$OUTPUT2"
+          echo "3-------****>$OUTPUT3"
+          echo "4-------****>$OUTPUT4"
           echo "****************************"
           python -m pip install --upgrade pip
           pip install -r requirements.txt
