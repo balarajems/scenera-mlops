@@ -58,9 +58,11 @@ jobs:
           echo "Output [$my_vars]"
           echo "my_vars=$my_vasr" >> $GITHUB_OUTPUT 
         id: training
+        shell: bash
         working-directory: ./src/model
       - run: |
           echo "-> ${{ steps.training.outputs.myoutput }}" 
+          echo "-> ${{ steps.training.outputs.myoutput2 }}" 
   get_model_training_status:
     needs: train-custom-model
     runs-on: ubuntu-latest
@@ -76,8 +78,8 @@ jobs:
         env:
           OUTPUT1: ${{needs.train-custom-model.outputs.output1}}
           OUTPUT2: ${{needs.train-custom-model.outputs.output2}}
-          OUTPUT3: ${{needs.train-custom-model.outputs.my_var}}
-          OUTPUT4: ${{needs.train-custom-model.outputs.my_vars}}
+          OUTPUT3: ${{needs.train-custom-model.outputs.my_vars}}
+          OUTPUT4: ${{needs.train-custom-model.outputs.myoutput2}}
         run: |
           echo "****************************"
           echo "1-------****>$OUTPUT1"
