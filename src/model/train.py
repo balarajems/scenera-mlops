@@ -15,22 +15,26 @@ from sklearn.linear_model import LogisticRegression
 # define functions
 def main(args):
     with mlflow.start_run() as run:
-        mlflow.autolog()
+        # mlflow.autolog()
 
         # read data
-        df = get_csvs_df(args.training_data)
+        # df = get_csvs_df(args.training_data)
 
         # split data
-        X_train, X_test, y_train, y_test = split_data(df)
+        # X_train, X_test, y_train, y_test = split_data(df)
 
         # train model
-        train_model(args.reg_rate, X_train, X_test, y_train, y_test)
+        # train_model(args.reg_rate, X_train, X_test, y_train, y_test)
+        # set_output("run_id", "run123456")
+            # set name of the variable
+        print('-> Python script ran')
+        run_id = "run123456"                          
+        os.system(f'echo "myoutput={run_id}" >> $GITHUB_OUTPUT')
         
-        mlflow.register_model(
-            model_uri=f"runs:/{run.info.run_id}/model",
-            name="scenera-demo-model",
-        )
-
+        # mlflow.register_model(
+        #     model_uri=f"runs:/{run.info.run_id}/model",
+        #     name="scenera-demo-model",
+        # )
 
 
 def split_data(df):
