@@ -1,0 +1,22 @@
+name: train custom model
+
+on:
+  workflow_dispatch:
+    inputs:
+      datasetName: 
+        description: 'Name of dataset in Azure Custom Vision'     
+        required: true
+        default: 'sceneradatasetv1'
+        type: string
+jobs:
+  train-custom-model:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo content
+        uses: actions/checkout@v2 # checkout the repository content
+
+      - name: train custom model
+        env:
+          INPUT_DATASET_NAME: ${{ github.event.inputs.datasetName }} 
+        run: |
+          echo "INPUT_DATASET_NAME $INPUT_DATASET_NAME"
